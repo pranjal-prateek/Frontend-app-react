@@ -5,8 +5,8 @@ import Login from './components/login/Login';
 import Navbar from './components/NavBar/Navbar';
 import { useLocation } from 'react-router-dom';
 const ImageRenderer =lazy(()=>import('./components/imageRenderer/ImageRenderer'));
-const About =lazy(()=>import('./components/misc/About'));
-const Contact =lazy(()=>import('./components/misc/ContactUs'));
+const About =lazy(()=>import('./components/pages/About'));
+const Contact =lazy(()=>import('./components/pages/ContactUs'));
 function App() {
   const [loaded,setLoaded] =useState(false)
   const [notLoggedIn,seNotLoggedin] =useState(false)
@@ -54,6 +54,8 @@ function App() {
     <div>
       <Suspense fallback={<div>Loading...</div>}>
     {path==='/login'?null:  <Navbar handleSearch={handleSearch} notLoggedIn={notLoggedIn}/>} 
+
+    {/* //fix routes using outlets */}
       <Routes>
         <Route path="/getImages" exact element={<ImageRenderer data={filteredData} loaded={loaded} />}/>
         <Route path="/login" element={<Login/>}/>

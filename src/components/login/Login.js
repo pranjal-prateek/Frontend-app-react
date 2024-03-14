@@ -1,6 +1,10 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import './login.css'
+import Buttons from '../atoms/buttons/Buttons';
+import InputBox from '../atoms/inputs/InputBox';
+import Label from '../atoms/label/Label';
+import SearchBar from '../molecules/SearchBar';
 const initialValue = {
   username: '',
   password: '',
@@ -23,6 +27,7 @@ const reducer = (state, action) => {
 const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialValue);
   const [loaded, setLoaded] = useState(false);
+  const [disabled, setDisabled] = useState(false)
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -38,7 +43,11 @@ const Login = () => {
       dispatch({ type: 'error', payload: 'An error occurred while logging in' }); 
     }
   };
-
+  useEffect(()=>{
+    console.log(state.username +",,,"+ state.password)
+    console.log(state.username==="" || state.password==="");
+  },[state])
+  
   const login = async (username, password) => {
     try {
       const response = await fetch('/api/login', {
@@ -48,7 +57,7 @@ const Login = () => {
         },
         body: JSON.stringify({ username, password }),
       });
-
+      
       if (!response.ok) {
         throw new Error('Login failed');
       }
@@ -62,7 +71,12 @@ const Login = () => {
       return null;
     }
   };
-
+//folder str
+//atomic design pattern to be implementd
+//COMPONENTS AND PAGES SHOULD BE SEPAREATED 
+//CONTEXT API TO BE IMPLEMENTED
+//reducer logixc shld be moded to common storre
+// precommit hooks to be setup looked at 
   return (
     <div className="login-container">
       {loaded ? (
@@ -71,31 +85,30 @@ const Login = () => {
         <form onSubmit={handleLogin} className="login-form">
           <h2>Login</h2>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
+            <Label htmlFor="username" text={"Username"}/>
+            <InputBox
               type="text"
               id="username"
               placeholder="Enter your username"
               value={state.username}
-              onChange={(e) => dispatch({ type: 'username', payload: e.target.value })}
-              required
+              onChange={(e) => {dispatch({ type: 'username', payload: e.target.value })}}
+              required={true}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
+            <Label htmlFor="password" text={"Password"}/>
+            <InputBox
               type="password"
               id="password"
               placeholder="Enter your password"
               value={state.password}
-              onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}
-              required
+              onChange={(e) => {dispatch({ type: 'password', payload: e.target.value })}}
+              required={true}
             />
              {state.error && <span className="error">	&#9888; {state.error}</span>}
 
           </div>
-         
-          <button type="submit">Login</button>
+          <Buttons type={'submit'} disabled={state.username==="" || state.password===""} text="Login"/>
         </form>
       )}
     </div>
