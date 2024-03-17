@@ -1,0 +1,7 @@
+export const home ='Home'
+export const about ='About'
+export const contact ='Contact Us'
+export const login ='Login'
+export const logout ='Logout'
+export const search ='Search'
+export const submit ='Submit'
