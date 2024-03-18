@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {setToken} from '../../../utils/utils'
 import './login.css';
 import { homeRoute,loginAPI } from '../../../constants/constants';
+import Modal from '../../organism/Modal';
 const Login = () => {
   const [state, dispatch] = useReducer(reducer, initialValue);
   const [showLoader, setShowLoader] = useState(false);
@@ -61,6 +62,7 @@ console.log(showLoader);
   return (
     <div className="login-container">
       <LoginForm state={state} dispatch={dispatch} onSubmit={handleLogin} showLoader={showLoader} />
+     
     </div>
   );
 };

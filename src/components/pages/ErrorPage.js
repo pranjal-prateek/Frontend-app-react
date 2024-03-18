@@ -1,5 +1,5 @@
 import React from 'react'
-import Buttons from '../atoms/buttons/Buttons';
+import Buttons from '../atoms/buttons/Button';
 import { useNavigate } from 'react-router-dom';
 import { homeRoute } from '../../constants/constants';
 const ErrorPage = () => {

@@ -1,16 +1,14 @@
 // backspace key press remove 
-import React, { useEffect, useReducer, useState } from 'react';
-import './Nav.css';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import InputBox from '../../atoms/inputs/InputBox';
-import { scrollToTop,removeToken } from '../../../utils/utils';
-import Buttons from '../../atoms/buttons/Buttons';
-import { initialValue, reducer } from '../../../store/reducer';
-import { useSearch } from '../../../context/SearchContext';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { aboutRoute, contactRoute, homeRoute, loginRoute } from '../../../constants/constants';
-import { about, contact, home, login, logout } from '../../../strings/string';
+import { useSearch } from '../../../context/SearchContext';
+import { about, contact, home } from '../../../strings/string';
+import { removeToken, scrollToTop } from '../../../utils/utils';
 import Toast from '../../atoms/Taost';
+import InputBox from '../../atoms/inputs/InputBox';
+import Modal from '../Modal';
+import './Nav.css';
 const Navbar = ({isOnline}) => {
   const { searchText, setSearch } = useSearch();
   const [showPopUp,setShowPopUp] =useState(false)
@@ -29,7 +27,18 @@ const Navbar = ({isOnline}) => {
  const handleSearchChange = (e) => {
   setSearch(e.target.value);
   };
-
+  const LogOutModal =()=>{
+    return(
+      <div>
+        <p className='text-gray-400'>Are you sure you want to logout ?</p>
+      </div>
+    )
+  }
+  const handleOnKeyDown =(e)=>{
+    if (e.keyCode === 8) {
+      setSearch("")
+  }
+  }
   return (
     <div>
       <nav>
@@ -46,15 +55,18 @@ const Navbar = ({isOnline}) => {
               isSearchBar={true}
               crossButtonRequired={true}
               onClickCross={() => setSearch("")}
+              onKeyDown={(e)=>handleOnKeyDown(e)}
             />
           </li>
           <li><Link to={homeRoute} className='links'>{home}</Link></li>
           <li><Link to={aboutRoute} className='links'>{about}</Link></li>
           <li><Link to={contactRoute} className='links'>{contact}</Link></li>
-          <li><Buttons onClick={handleLogout} text={logout} /></li>
+          <li> <Modal buttonText={"Logout"} modalHeading={"Leaving Soon !!"} SubmitText={"Yes"} closeText={"No I don't"} onClickSubmit={handleLogout}>
+        <LogOutModal />
+      </Modal></li>
         </ul>
       </nav>
-      {!isOnline ? <Toast text={"OOPS!! You are offline"} />:<Toast text={"Greate!! Back Online Again"} color={"bg-green-600"}/>} 
+      {!isOnline ? <Toast text={"OOPS!! You are offline"} />:<Toast text={"Great!! Back Online Again"} color={"bg-green-600"}/>} 
     </div>
   );
 };

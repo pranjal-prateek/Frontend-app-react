@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import InputBox from '../atoms/inputs/InputBox';
 import Label from '../atoms/label/Label';
-import Button from '../atoms/buttons/Buttons';
+import Button from '../atoms/buttons/Button';
 import { login } from '../../strings/string';
 const LoginForm = ({ state, dispatch, onSubmit, showLoader }) => {
   return (

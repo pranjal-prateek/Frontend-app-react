@@ -13,10 +13,10 @@ const InputBox = ({
   errorMessage,
   isSearchBar, 
   crossButtonRequired, 
-  onClickCross 
+  onClickCross, 
+  onKeyDown
 }) => {
   const [error, setError] = useState(false);
-
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
@@ -39,6 +39,7 @@ const InputBox = ({
         onChange={handleInputChange}
         required={required}
         className={`bg-transparent w-full ${className}`}
+        onKeyDown={onKeyDown}
       />
       {isSearchBar && crossButtonRequired && (
         <span onClick={onClickCross} className="material-symbols-outlined text-gray-100 pr-2">
